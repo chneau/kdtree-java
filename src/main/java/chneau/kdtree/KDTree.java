@@ -52,6 +52,14 @@ public class KDTree {
         return root.points();
     }
 
+    public Point knn(Point p) {
+        var res = knn(p, 1);
+        if (res.size() == 0) {
+            return null;
+        }
+        return res.get(0);
+    }
+
     public List<Point> knn(Point p, int k) {
         if (root == null || p == null || k == 0) {
             return List.of();
