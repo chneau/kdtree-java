@@ -9,7 +9,7 @@ class Node implements Point {
     Node right;
 
     Node(List<Point> points, int axis) {
-        if (points == null) {
+        if (points == null || points.size() == 0) {
             return;
         }
         if (points.size() == 1) {
@@ -145,5 +145,10 @@ class Node implements Point {
             points.addAll(right.points());
         }
         return points;
+    }
+
+    @Override
+    public String toString() {
+        return self.toString();
     }
 }

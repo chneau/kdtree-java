@@ -7,7 +7,15 @@ import java.util.PriorityQueue;
 public class KDTree {
     Node root;
 
+    public KDTree() {
+        this(List.of());
+    }
+
     public KDTree(List<Point> points) {
+        if (points == null || points.size() == 0) {
+            root = null;
+            return;
+        }
         root = new Node(points, 0);
     }
 
@@ -50,7 +58,7 @@ public class KDTree {
         }
         var nearestPQ =
                 new PriorityQueue<Point>(
-                        (a, b) -> (int) (distance(p, a) * 1000 - distance(p, b) * 1000));
+                        (a, b) -> (int) (distance(p, b) * 1000 - distance(p, a) * 1000));
         knn(p, k, root, 0, nearestPQ);
         var result = new ArrayList<Point>();
         for (int i = 0; i < k; i++) {
@@ -86,15 +94,14 @@ public class KDTree {
             }
             currentNode = path.remove(path.size() - 1);
             var currentDistance = distance(p, currentNode);
-            var checkedDistance = distance(p, getNth(nearestPQ, k - 1));
+            var checkedDistance = distanceOrMax(nearestPQ, p, k - 1);
             if (currentDistance < checkedDistance) {
                 nearestPQ.add(currentNode);
-                checkedDistance = distance(p, getNth(nearestPQ, k - 1));
+                checkedDistance =  distanceOrMax(nearestPQ, p, k - 1);
             }
 
             // check other side of plane
-            if (planeDistance(p, currentNode.dimension(currentAxis), currentAxis)
-                    < checkedDistance) {
+            if (planeDistance(p, currentNode.dimension(currentAxis), currentAxis) < checkedDistance) {
                 Node next = null;
                 if (p.dimension(currentAxis) < currentNode.dimension(currentAxis)) {
                     next = currentNode.right;
@@ -111,11 +118,11 @@ public class KDTree {
         return Math.abs(planePosition - p.dimension(dim));
     }
 
-    private static Point getNth(PriorityQueue<Point> nearestPQ, int i) {
-        if (nearestPQ.size() <= i) {
-            return null;
+    private static double distanceOrMax(PriorityQueue<Point> nearestPQ, Point a, int i) {
+        if (i >= nearestPQ.size() || a == null) {
+            return Long.MAX_VALUE;
         }
-        return (new ArrayList<>(nearestPQ)).get(i);
+        return distance(a, (new ArrayList<>(nearestPQ)).get(i));
     }
 
     private static double distance(Point a, Point b) {
