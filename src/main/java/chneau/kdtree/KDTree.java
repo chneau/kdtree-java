@@ -104,7 +104,7 @@ public class KDTree {
             var currentDistance = distance(p, currentNode);
             var checkedDistance = distanceOrMax(nearestPQ, p, k - 1);
             if (currentDistance < checkedDistance) {
-                nearestPQ.add(currentNode);
+                nearestPQ.add(currentNode.self);
                 checkedDistance =  distanceOrMax(nearestPQ, p, k - 1);
             }
 
