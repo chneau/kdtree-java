@@ -58,7 +58,7 @@ public class KDTree {
         }
         var nearestPQ =
                 new PriorityQueue<Point>(
-                        (a, b) -> (int) (distance(p, b) * 1000 - distance(p, a) * 1000));
+                        (a, b) -> (int) (distance(p, a) * 1000 - distance(p, b) * 1000));
         knn(p, k, root, 0, nearestPQ);
         var result = new ArrayList<Point>();
         for (int i = 0; i < k; i++) {
@@ -67,7 +67,7 @@ public class KDTree {
         return result;
     }
 
-    private static void knn(
+     static void knn(
             Point p, int k, Node start, int currentAxis, PriorityQueue<Point> nearestPQ) {
         if (p == null || k == 0 || start == null) {
             return;
@@ -114,21 +114,21 @@ public class KDTree {
         }
     }
 
-    private static double planeDistance(Point p, double planePosition, int dim) {
+     static double planeDistance(Point p, double planePosition, int dim) {
         return Math.abs(planePosition - p.dimension(dim));
     }
 
-    private static double distanceOrMax(PriorityQueue<Point> nearestPQ, Point a, int i) {
+     static double distanceOrMax(PriorityQueue<Point> nearestPQ, Point a, int i) {
         if (i >= nearestPQ.size() || a == null) {
             return Long.MAX_VALUE;
         }
         return distance(a, (new ArrayList<>(nearestPQ)).get(i));
     }
 
-    private static double distance(Point a, Point b) {
+     static double distance(Point a, Point b) {
         var sum = 0.;
         for (int i = 0; i < a.dimensions(); i++) {
-            sum += Math.pow(a.dimension(i), b.dimension(i));
+            sum += Math.pow(a.dimension(i) - b.dimension(i), 2);
         }
         return Math.sqrt(sum);
     }

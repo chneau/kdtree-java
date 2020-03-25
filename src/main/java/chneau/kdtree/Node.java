@@ -109,7 +109,7 @@ class Node implements Point {
         return new RemovedNodes(this, null);
     }
 
-    private Node findSmallest(int axis, Node smallest) {
+     Node findSmallest(int axis, Node smallest) {
         if (smallest == null || dimension(axis) < smallest.dimension(axis)) {
             smallest = this;
         }
@@ -122,7 +122,7 @@ class Node implements Point {
         return smallest;
     }
 
-    private Node findLargest(int axis, Node largest) {
+     Node findLargest(int axis, Node largest) {
         if (largest == null || dimension(axis) > largest.dimension(axis)) {
             largest = this;
         }
