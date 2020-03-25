@@ -48,7 +48,9 @@ public class KDTree {
         if (root == null || p == null || k == 0) {
             return List.of();
         }
-        var nearestPQ = new PriorityQueue<Point>((a,b)->(int)(distance(p, a)*1000-distance(p, b)*1000));
+        var nearestPQ =
+                new PriorityQueue<Point>(
+                        (a, b) -> (int) (distance(p, a) * 1000 - distance(p, b) * 1000));
         knn(p, k, root, 0, nearestPQ);
         var result = new ArrayList<Point>();
         for (int i = 0; i < k; i++) {
@@ -57,7 +59,8 @@ public class KDTree {
         return result;
     }
 
-    private static void knn(Point p, int k, Node start, int currentAxis,PriorityQueue<Point> nearestPQ) {
+    private static void knn(
+            Point p, int k, Node start, int currentAxis, PriorityQueue<Point> nearestPQ) {
         if (p == null || k == 0 || start == null) {
             return;
         }
@@ -75,7 +78,7 @@ public class KDTree {
             currentAxis = (currentAxis + 1) % p.dimensions();
         }
 
-	    // 2. move up
+        // 2. move up
         currentAxis = (currentAxis - 1 + p.dimensions()) % p.dimensions();
         while (true) {
             if (path.size() == 0) {
@@ -90,7 +93,8 @@ public class KDTree {
             }
 
             // check other side of plane
-            if (planeDistance(p, currentNode.dimension(currentAxis), currentAxis) < checkedDistance) {
+            if (planeDistance(p, currentNode.dimension(currentAxis), currentAxis)
+                    < checkedDistance) {
                 Node next = null;
                 if (p.dimension(currentAxis) < currentNode.dimension(currentAxis)) {
                     next = currentNode.right;

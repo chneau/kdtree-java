@@ -52,7 +52,7 @@ class Node implements Point {
         }
     }
 
-    static public class RemovedNodes {
+    public static class RemovedNodes {
         public Node returned;
         public Node subtitute;
 
@@ -105,7 +105,6 @@ class Node implements Point {
                 rn.returned.right = rn.subtitute;
             }
             return new RemovedNodes(this, rn.returned);
-
         }
         return new RemovedNodes(this, null);
     }
