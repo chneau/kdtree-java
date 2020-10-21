@@ -16,7 +16,7 @@ class Node implements Point {
             self = points.get(0);
             return;
         }
-        points.sort((a, b) -> (int) (a.dimension(axis) - b.dimension(axis)));
+        points.sort((a, b) -> Double.compare(a.dimension(axis), b.dimension(axis)));
         var mid = points.size() / 2;
         self = points.get(mid);
         var nextDim = (axis + 1) % dimensions();
