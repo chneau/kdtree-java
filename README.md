@@ -1,8 +1,20 @@
 # kdtree-java
-kdtree-java
 
-## Source of code
+KD-tree spatial index implemented in Java.
 
-Big thanks to:  
+## Build and test
 
-https://github.com/kyroy/kdtree
+```bash
+./gradlew build
+./gradlew test
+```
+
+## Layout
+
+- `src/main/java` — implementation
+- `src/test/java` — tests
+- `MAIN.md` — additional notes
+
+## License
+
+MIT
